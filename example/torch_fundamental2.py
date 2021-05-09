@@ -115,6 +115,7 @@ x = torch.FloatTensor([[1,2],[3,4]])
 out_x = x.mul(2)
 print(out_x)
 print(x)
-
+# 연산결과를 저장할려면 변수에 메모리 할당을 해야되는데
+# _ 을붙혀 inplace 옵션을 주면 파라미터로 받은값에 할당함
 print(x.mul_(2))
 print(x)
