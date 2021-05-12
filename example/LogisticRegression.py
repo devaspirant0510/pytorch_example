@@ -55,7 +55,6 @@ class Modle(nn.Module):
 def accuracy(hx,y_train):
     predict = hx>=torch.FloatTensor([0.5])
     predict = predict.float()
-    print(predict)
     return torch.sum(predict==y_train)/len(hx)
 
 def draw_chart(loss_x,loss_li):
