@@ -58,24 +58,12 @@ df.columns = ['x1','x2','x3','x4','y']
 #===================# Softmax Classification #===================#
 x_train = torch.FloatTensor(x_data)
 y_train = torch.LongTensor(y_data)
-
-#model class
-class Model(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.linear = nn.Linear(4,3)
-        self.sigmoid = nn.Sigmoid()
-    def forward(self,x):
-        return self.sigmoid(self.linear(x))
-
-model = Model()
-#optimizer 
 W = torch.zeros((4,3),requires_grad=True)
 b = torch.zeros(3,requires_grad=True)
-optimizer = optim.Adagrad(model.parameters(),lr=0.1)
-epoch = 10000
+optimizer = optim.SGD([W,b],lr=0.1)
+epoch = 2000
 for i in range(1,epoch+1):
-    hx = model(x_train)
+    hx = F.log_softmax(x_train.matmul(W)+b)
     cost = F.cross_entropy(hx,y_train)
 
     optimizer.zero_grad()
@@ -83,3 +71,27 @@ for i in range(1,epoch+1):
     optimizer.step()
     if i%100==0:
         print(f"{i}/{epoch}\t\t cost:{cost}")
+
+# #model class
+# class Model(nn.Module):
+#     def __init__(self):
+#         super().__init__()
+#         self.linear = nn.Linear(4,3)
+#     def forward(self,x):
+#         return self.linear(x)
+
+# model = Model()
+# #optimizer 
+# W = torch.zeros((4,3),requires_grad=True)
+# b = torch.zeros(3,requires_grad=True)
+# optimizer = optim.Adagrad(model.parameters(),lr=0.1)
+# epoch = 10000
+# for i in range(1,epoch+1):
+#     hx = model(x_train)
+#     cost = F.cross_entropy(hx,y_train)
+
+#     optimizer.zero_grad()
+#     cost.backward()
+#     optimizer.step()
+#     if i%100==0:
+#         print(f"{i}/{epoch}\t\t cost:{cost}")
