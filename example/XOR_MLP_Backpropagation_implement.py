@@ -110,7 +110,7 @@ y_train = torch.FloatTensor([[0],[1],[1],[0]])
 layer1 = Layer(torch.rand(2,8),torch.rand(8),Sigmoid())
 layer2 = Layer(torch.rand(8,1),torch.rand(1),Sigmoid())
 
-model =  MyModel()
+model =  MyModel(lr=0.5)
 model.add(layer1)
 model.add(layer2)
 model.set_loss(BinaryCrossEntropy(),y_train)
